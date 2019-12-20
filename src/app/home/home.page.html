@@ -1,14 +1,61 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Ionic Blank
+      Ionic Cropper
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
+  <ion-button expand="full" (click)="captureImage()">
+    Capture Image
+  </ion-button>
+  <ion-button expand="full" (click)="scan()">
+    Scan
+  </ion-button>
+  <image-cropper
+    [imageBase64]="myImage"
+    [maintainAspectRatio]="false"
+    [aspectRatio]="16 / 9"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    outputType="base64"
+    autoCrop="true"
+  >
+  </image-cropper>
+
+  <ion-row *ngIf="myImage">
+    <ion-col size="3">
+      <ion-button fill="outline" (click)="rotateLeft()">
+        <ion-icon slot="start" name="refresh"></ion-icon>Left
+      </ion-button>
+    </ion-col>
+    <ion-col size="3">
+      <ion-button fill="outline" (click)="rotateRight()">
+        <ion-icon slot="start" name="refresh"></ion-icon>Right
+      </ion-button>
+    </ion-col>
+    <ion-col size="3">
+      <ion-button fill="outline" (click)="flipHorizontal()">
+        Flip X
+      </ion-button>
+    </ion-col>
+    <ion-col size="3">
+      <ion-button fill="outline" (click)="flipVertical()">
+        Flip Y
+      </ion-button>
+    </ion-col>
+  </ion-row>
+
+  <ion-card *ngIf="croppedImage">
+    <ion-card-header>
+      <ion-card-title>Cropped Image</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <img [src]="croppedImage" />
+    </ion-card-content>
+    <ion-button (click)="pdf1()">
+      Get PDF
+    </ion-button>
+  </ion-card>
 </ion-content>
